@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robert Eberson | Desenvolvedor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Caveat:wght@600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background: #ffffff; 
+            color: #111111; 
+            line-height: 1.7; 
+            font-weight: 400;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+        
+        header { 
+            padding: 140px 0 100px; 
+            text-align: left; 
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .signature {
+            font-family: 'Caveat', cursive;
+            font-size: 68px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+        
+        .tagline { 
+            font-size: 1.25rem; 
+            color: #666666; 
+            margin-bottom: 40px; 
+            font-weight: 300;
+        }
+        
+        section { 
+            padding: 80px 0; 
+            border-bottom: 1px solid #e5e5e5; 
+        }
+        
+        h2 { 
+            font-size: 1.75rem; 
+            margin-bottom: 40px; 
+            color: #000000;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        .sobre p {
+            font-size: 1.125rem;
+            color: #333333;
+            max-width: 65ch;
+        }
+        .services { display: grid; grid-template-columns: 1fr; gap: 40px; }
+        .service-item { 
+            padding: 0;
+            transition: transform 0.3s ease;
+        }
+        .service-item:hover {
+            transform: translateX(8px);
+        }
+        .service-item h3 { 
+            font-size: 1.25rem; 
+            margin-bottom: 8px; 
+            color: #000000;
+            font-weight: 600;
+        }
+        .service-item p { 
+            color: #666666; 
+            font-size: 1rem;
+        }
+        .skills { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 12px; 
+        }
+        .skill { 
+            padding: 10px 20px; 
+            border: 1px solid #e5e5e5; 
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #333333;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .skill:hover, .skill.active {
+            background: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+        
+        .code-display {
+            margin-top: 40px;
+            background: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+            display: none;
+        }
+        .code-display.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        .code-header {
+            background: #2d2d2d;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #3d3d3d;
+        }
+        .code-title {
+            color: #cccccc;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .code-close {
+            background: none;
+            border: none;
+            color: #cccccc;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0 8px;
+        }
+        .code-close:hover {
+            color: #ffffff;
+        }
+        .code-content {
+            padding: 24px;
+            overflow-x: auto;
+        }
+        .code-content pre {
+            margin: 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+        }
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #569cd6; }
+        .code-string { color: #ce9178; }
+        .code-function { color: #dcdcaa; }
+        .code-number { color: #b5cea8; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        footer { 
+            padding: 60px 0; 
+            text-align: left; 
+            color: #666666; 
+        }
+        .btn { 
+            display: inline-block; 
+            margin: 0 20px 0 0; 
+            padding: 14px 28px; 
+            background: #000000; 
+            color: #ffffff; 
+            text-decoration: none; 
+            border-radius: 4px; 
+            font-weight: 500; 
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        .btn:hover { 
+            background: #333333;
+            transform: translateY(-2px);
+        }
+        .btn-secondary { 
+            background: #ffffff; 
+            color: #000000;
+            border: 1px solid #000000;
+        }
+        .btn-secondary:hover { 
+            background: #f5f5f5;
+            transform: translateY(-2px);
+        }
+        .contato-info {
+            margin-top: 30px;
+            font-size: 0.95rem;
+            color: #666666;
+        }
+        .contato-info p {
+            margin-bottom: 8px;
+        }
+        @media (max-width: 768px) { 
+            header { padding: 80px 0 60px; }
+            section { padding: 60px 0; }
+            .signature { font-size: 54px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="signature">Robert Eberson</div>
+            <p class="tagline">Desenvolvedor Full Stack</p>
+            <div class="contato-links">
+                <a href="mailto:roberteberson7@gmail.com" target="_blank" class="btn">Enviar email</a>
+                <a href="https://wa.me/558796084701" target="_blank" class="btn btn-secondary">WhatsApp</a>
+            </div>
+        </header>
+
+        <section class="sobre">
+            <h2>Sobre</h2>
+            <p>Desenvolvedor focado em construir produtos digitais com código limpo, performance e atenção aos detalhes. Trabalho com desenvolvimento web e mobile, transformando requisitos de negócio em soluções funcionais e escaláveis.</p>
+        </section>
+
+        <section>
+            <h2>Serviços</h2>
+            <div class="services">
+                <div class="service-item">
+                    <h3>Desenvolvimento Web</h3>
+                    <p>Sites institucionais e aplicações web com arquitetura sólida, SEO técnico e otimização de performance.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Sistemas & APIs</h3>
+                    <p>Painéis administrativos, dashboards e integrações com bancos de dados e serviços externos.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Aplicações Android</h3>
+                    <p>Desenvolvimento e customização de aplicações para Android, incluindo modificação e otimização de APKs.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Competências</h2>
+            <div class="skills">
+                <div class="skill" data-tech="javascript">JavaScript</div>
+                <div class="skill" data-tech="react">React</div>
+                <div class="skill" data-tech="nodejs">Node.js</div>
+                <div class="skill" data-tech="html">HTML/CSS</div>
+                <div class="skill" data-tech="ui">UI Design</div>
+                <div class="skill" data-tech="android">Android</div>
+                <div class="skill" data-tech="api">APIs REST</div>
+                <div class="skill" data-tech="git">Git</div>
+            </div>
+            
+            <div class="code-display" id="codeDisplay">
+                <div class="code-header">
+                    <span class="code-title" id="codeTitle">Exemplo</span>
+                    <button class="code-close" onclick="closeCode()">×</button>
+                </div>
+                <div class="code-content">
+                    <pre id="codeContent"></pre>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="contato-info">
+                <p><strong>Contato</strong></p>
+                <p>roberteberson7@gmail.com</p>
+                <p>+55 87 9608-4701</p>
+                <p style="margin-top:24px; font-size:0.875rem;">© 2026 Robert Eberson</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const codeExamples = {
+            javascript: `<span class="code-comment">// Exemplo: Validar formulário de contato</span>
+<span class="code-keyword">function</span> <span class="code-function">validarEmail</span>(email) {
+  <span class="code-keyword">const</span> regex = <span class="code-string">/^[^\s@]+@[^\s@]+\.[^\s@]+$/</span>;
+  <span class="code-keyword">return</span> regex.test(email);
+}
+
+<span class="code-keyword">const</span> form = document.<span class="code-function">querySelector</span>(<span class="code-string">'#contato'</span>);
+form.<span class="code-function">addEventListener</span>(<span class="code-string">'submit'</span>, (e) => {
+  e.<span class="code-function">preventDefault</span>();
+  <span class="code-keyword">if</span> (<span class="code-function">validarEmail</span>(email.value)) {
+    <span class="code-function">enviarMensagem</span>();
+  }
+});`,
+            react: `<span class="code-comment">// Exemplo: Componente de botão reutilizável</span>
+<span class="code-keyword">import</span> React <span class="code-keyword">from</span> <span class="code-string">'react'</span>;
+
+<span class="code-keyword">function</span> <span class="code-function">Botao</span>({ texto, onClick }) {
+  <span class="code-keyword">return</span> (
+    &lt;<span class="code-keyword">button</span> 
+      <span class="code-function">onClick</span>={onClick}
+      className=<span class="code-string">"btn-primary"</span>
+    &gt;
+      {texto}
+    &lt;/<span class="code-keyword">button</span>&gt;
+  );
+}
+
+<span class="code-keyword">export default</span> Botao;`,
+            nodejs: `<span class="code-comment">// Exemplo: API simples com Express</span>
+<span class="code-keyword">const</span> express = <span class="code-function">require</span>(<span class="code-string">'express'</span>);
+<span class="code-keyword">const</span> app = <span class="code-function">express</span>();
+
+app.<span class="code-function">get</span>(<span class="code-string">'/api/usuario'</span>, (req, res) => {
+  res.<span class="code-function">json</span>({ 
+    nome: <span class="code-string">'Robert'</span>, 
+    cargo: <span class="code-string">'Dev Full Stack'</span> 
+  });
+});
+
+app.<span class="code-function">listen</span>(<span class="code-number">3000</span>, () => {
+  console.<span class="code-function">log</span>(<span class="code-string">'Servidor rodando'</span>);
+});`,
+            html: `<span class="code-comment">&lt;!-- Exemplo: Estrutura semântica HTML5 --&gt;</span>
+&lt;<span class="code-keyword">section</span> class=<span class="code-string">"card-produto"</span>&gt;
+  &lt;<span class="code-keyword">img</span> src=<span class="code-string">"produto.jpg"</span> alt=<span class="code-string">"Produto"</span> /&gt;
+  &lt;<span class="code-keyword">h3</span>&gt;Nome do Produto&lt;/<span class="code-keyword">h3</span>&gt;
+  &lt;<span class="code-keyword">p</span> class=<span class="code-string">"preco"</span>&gt;R$ <span class="code-number">99,90</span>&lt;/<span class="code-keyword">p</span>&gt;
+  &lt;<span class="code-keyword">button</span>&gt;Comprar&lt;/<span class="code-keyword">button</span>&gt;
+&lt;/<span class="code-keyword">section</span>&gt;
+
+<span class="code-comment">/* CSS: Estilo do card */</span>
+.<span class="code-function">card-produto</span> {
+  <span class="code-keyword">border-radius</span>: <span class="code-number">8px</span>;
+  <span class="code-keyword">box-shadow</span>: <span class="code-number">0 2px 8px</span> rgba(<span class="code-number">0,0,0,0.1</span>);
+}`,
+            ui: `<span class="code-comment">// Exemplo: Sistema de design em JS</span>
+<span class="code-keyword">const</span> tema = {
+  <span class="code-function">cores</span>: {
+    primaria: <span class="code-string">'#000000'</span>,
+    secundaria: <span class="code-string">'#666666'</span>,
+    fundo: <span class="code-string">'#ffffff'</span>
+  },
+  <span class="code-function">espacamento</span>: {
+    pequeno: <span class="code-string">'8px'</span>,
+    medio: <span class="code-string">'16px'</span>,
+    grande: <span class="code-string">'24px'</span>
+  },
+  <span class="code-function">borda</span>: {
+    raio: <span class="code-string">'4px'</span>
+  }
+};`,
+            android: `<span class="code-comment">// Exemplo: Activity Android em Kotlin</span>
+<span class="code-keyword">class</span> <span class="code-function">MainActivity</span> : <span class="code-function">AppCompatActivity</span>() {
+  <span class="code-keyword">override fun</span> <span class="code-function">onCreate</span>(savedInstanceState: Bundle?) {
+    <span class="code-keyword">super</span>.<span class="code-function">onCreate</span>(savedInstanceState)
+    <span class="code-function">setContentView</span>(R.layout.activity_main)
+    
+    <span class="code-keyword">val</span> btn = <span class="code-function">findViewById</span>&lt;Button&gt;(R.id.btnEnviar)
+    btn.<span class="code-function">setOnClickListener</span> {
+      Toast.<span class="code-function">makeText</span>(<span class="code-keyword">this</span>, <span class="code-string">"Clicado!"</span>, Toast.LENGTH_SHORT).<span class="code-function">show</span>()
+    }
+  }
+}`,
+            api: `<span class="code-comment">// Exemplo: Consumir API com Fetch</span>
+<span class="code-keyword">async function</span> <span class="code-function">buscarDados</span>() {
+  <span class="code-keyword">try</span> {
+    <span class="code-keyword">const</span> resposta = <span class="code-keyword">await</span> <span class="code-function">fetch</span>(<span class="code-string">'https://api.exemplo.com/dados'</span>);
+    <span class="code-keyword">const</span> dados = <span class="code-keyword">await</span> resposta.<span class="code-function">json</span>();
+    
+    <span class="code-function">renderizarNaTela</span>(dados);
+  } <span class="code-keyword">catch</span> (erro) {
+    console.<span class="code-function">error</span>(<span class="code-string">'Erro:'</span>, erro);
+  }
+}`,
+            git: `<span class="code-comment"># Exemplo: Fluxo básico Git</span>
+<span class="code-keyword">git</span> status
+<span class="code-keyword">git</span> add .
+<span class="code-keyword">git</span> commit -m <span class="code-string">"feat: adiciona validação de email"</span>
+<span class="code-keyword">git</span> push origin main
+
+<span class="code-comment"># Criar nova branch</span>
+<span class="code-keyword">git</span> checkout -b feature/nova-funcionalidade
+<span class="code-keyword">git</span> push origin feature/nova-funcionalidade`
+        };
+
+        document.querySelectorAll('.skill').forEach(skill => {
+            skill.addEventListener('click', function() {
+                const tech = this.getAttribute('data-tech');
+                
+                document.querySelectorAll('.skill').forEach(s => s.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.getElementById('codeTitle').textContent = this.textContent + ' - Exemplo';
+                document.getElementById('codeContent').innerHTML = codeExamples[tech];
+                document.getElementById('codeDisplay').classList.add('show');
+                
+                document.getElementById('codeDisplay').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        });
+
+        function closeCode() {
+            document.getElementById('codeDisplay').classList.remove('show');
+            document.querySelectorAll('.skill').forEach(s => s.classList.remove('active'));
+        }
+    </script>
+</body>
+</html>
