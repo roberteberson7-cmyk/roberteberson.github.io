@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WASD Gaming Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        .navbar { border-bottom: 1px solid #e9ecef; }
+        .hero { padding: 120px 0; }
+        .btn-dark { padding: 12px 28px; border-radius: 6px; }
+        .feature-icon { width: 48px; height: 48px; background: #000; color: #fff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+        .step-number { font-size: 3rem; font-weight: 700; color: #e9ecef; }
+        .section-padding { padding: 80px 0; }
+        .bg-light-gray { background: #f8f9fa; }
+        footer { background: #111; color: #fff; }
+        a { color: #000; text-decoration: none; }
+        footer a { color: #fff; }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ── Page fade-in ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .page.active { animation: fadeUp 0.35s ease; }
+
+        /* ── Hero text ── */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .hero h1 { animation: fadeIn 0.5s ease both; }
+        .hero p.lead { animation: fadeIn 0.5s ease 0.15s both; }
+        .hero div { animation: fadeIn 0.5s ease 0.25s both; }
+
+        /* ── Feature icons hover ── */
+        .feature-icon { transition: transform 0.25s ease, background 0.25s ease; }
+        .feature-icon:hover { transform: scale(1.15); background: #333; }
+
+        /* ── Buttons hover ── */
+        .btn-dark { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+        .btn-outline-dark { transition: transform 0.2s ease; }
+        .btn-outline-dark:hover { transform: translateY(-2px); }
+
+        /* ── Scroll reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Nav link underline ── */
+        .navbar-brand { transition: opacity 0.2s; }
+        .navbar-brand:hover { opacity: 0.7; }
+
+        /* ── Navbar shadow on scroll ── */
+        .navbar { transition: box-shadow 0.3s ease; }
+        .navbar.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+
+        /* ── Hero logo gentle float ── */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-6px); }
+        }
+        .hero-logo { animation: float 3.5s ease-in-out infinite; display: inline-block; }
+
+        /* ── Feature cards hover lift ── */
+        .feature-card-wrap {
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border-radius: 8px;
+        }
+        .feature-card-wrap:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        /* ── Step numbers hover ── */
+        .step-number { transition: color 0.3s ease; }
+        .step-number:hover { color: #adb5bd; }
+
+        /* ── Nav download button pulse once on load ── */
+        @keyframes subtlePulse {
+            0%   { box-shadow: 0 0 0 0 rgba(0,0,0,0.15); }
+            70%  { box-shadow: 0 0 0 8px rgba(0,0,0,0); }
+            100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+        }
+        .nav-pulse { animation: subtlePulse 1.5s ease 1s both; }
+
+        /* ── Footer links hover ── */
+        footer a { transition: opacity 0.2s ease; }
+        footer a:hover { opacity: 0.7; }
+
+        /* ── HR animate in ── */
+        hr { opacity: 0; transform: scaleX(0.6); transform-origin: left;
+             transition: opacity 0.5s ease, transform 0.5s ease; }
+        hr.visible { opacity: 1; transform: scaleX(1); }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAV ===== -->
+    <nav class="navbar navbar-expand-lg bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-black d-flex align-items-center gap-2" href="#" onclick="navigate('home')">
+                <svg width="32" height="32" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="300" height="300" rx="68" ry="68" fill="#000"/>
+                    <rect x="97"  y="108" width="22" height="84" rx="4" fill="#fff"/>
+                    <rect x="142" y="108" width="22" height="84" rx="4" fill="#fff"/>
+                    <rect x="187" y="108" width="22" height="84" rx="4" fill="#fff"/>
+                </svg>
+                WASD
+            </a>
+            <div class="ms-auto">
+                <a href="#" onclick="navigate('download')" class="btn btn-dark btn-sm nav-pulse">Baixar APK</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HOME ===== -->
+    <div class="page active" id="page-home">
+
+        <section class="hero text-center">
+            <div class="container">
+                <div class="mb-4">
+                    <svg class="hero-logo" width="72" height="72" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="300" height="300" rx="68" ry="68" fill="#000"/>
+                        <rect x="97"  y="108" width="22" height="84" rx="4" fill="#fff"/>
+                        <rect x="142" y="108" width="22" height="84" rx="4" fill="#fff"/>
+                        <rect x="187" y="108" width="22" height="84" rx="4" fill="#fff"/>
+                    </svg>
+                </div>
+                <h1 class="display-3 fw-bold mb-3">WASD GAMING HUB</h1>
+                <p class="lead text-secondary mb-4">Otimize seu celular para jogar com performance máxima</p>
+                <div>
+                    <a href="#" onclick="navigate('download')" class="btn btn-dark me-2">Baixar APK</a>
+                    <a href="#" onclick="navigate('recursos')" class="btn btn-outline-dark">Ver Recursos</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="recursos" class="section-padding bg-light-gray">
+            <div class="container">
+                <div class="row text-center g-5">
+                    <div class="col-md-6 col-lg-3 reveal">
+                        <div class="feature-card-wrap p-3 text-center">
+                        <div class="feature-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                        <h5 class="fw-bold">Borda Mágica</h5>
+                        <p class="text-secondary">Bordas personalizáveis para tela e status</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 reveal" style="transition-delay:0.1s">
+                        <div class="feature-card-wrap p-3 text-center">
+                        <div class="feature-icon"><i class="fa-solid fa-crosshairs"></i></div>
+                        <h5 class="fw-bold">Ponteiro Gamer</h5>
+                        <p class="text-secondary">Mira custom para jogos de FPS</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 reveal" style="transition-delay:0.2s">
+                        <div class="feature-card-wrap p-3 text-center">
+                        <div class="feature-icon"><i class="fa-solid fa-wifi"></i></div>
+                        <h5 class="fw-bold">Scan Wi-Fi</h5>
+                        <p class="text-secondary">Análise de rede local e diagnóstico</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 reveal" style="transition-delay:0.3s">
+                        <div class="feature-card-wrap p-3 text-center">
+                        <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <h5 class="fw-bold">DNS Proxy</h5>
+                        <p class="text-secondary">Reduza o ping com DNS otimizado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="text-center mb-5 reveal">
+                    <p class="text-secondary text-uppercase fw-semibold" style="letter-spacing:3px;font-size:0.8rem;">Simples e rápido</p>
+                    <h2 class="fw-bold">Como funciona</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4 reveal">
+                        <div class="step-card h-100 p-4 rounded-3 border position-relative overflow-hidden">
+                            <span class="step-bg-num">01</span>
+                            <div class="step-icon-wrap mb-3">
+                                <i class="fa-solid fa-download"></i>
+                            </div>
+                            <h5 class="fw-bold mb-2">Instalar</h5>
+                            <p class="text-secondary mb-0">Baixe o APK diretamente no seu Android. Sem precisar de loja, sem cadastro, sem complicação.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal" style="transition-delay:0.15s">
+                        <div class="step-card step-card--accent h-100 p-4 rounded-3 border position-relative overflow-hidden">
+                            <span class="step-bg-num">02</span>
+                            <div class="step-icon-wrap mb-3">
+                                <i class="fa-solid fa-sliders"></i>
+                            </div>
+                            <h5 class="fw-bold mb-2">Ativar</h5>
+                            <p class="mb-0">Escolha quais ferramentas quer usar. Cada recurso é independente — ative só o que precisar.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal" style="transition-delay:0.3s">
+                        <div class="step-card h-100 p-4 rounded-3 border position-relative overflow-hidden">
+                            <span class="step-bg-num">03</span>
+                            <div class="step-icon-wrap mb-3">
+                                <i class="fa-solid fa-gamepad"></i>
+                            </div>
+                            <h5 class="fw-bold mb-2">Jogar</h5>
+                            <p class="text-secondary mb-0">Sinta a diferença no campo de batalha. Menos lag, mais precisão, performance real.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            .step-card {
+                background: #fff;
+                transition: transform 0.25s ease, box-shadow 0.25s ease;
+            }
+            .step-card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 12px 32px rgba(0,0,0,0.09);
+            }
+            .step-card--accent {
+                background: #111;
+                color: #fff;
+                border-color: #111 !important;
+            }
+            .step-card--accent .step-icon-wrap { background: rgba(255,255,255,0.12); color: #fff; }
+            .step-bg-num {
+                position: absolute;
+                top: -10px; right: 12px;
+                font-size: 5.5rem;
+                font-weight: 900;
+                color: rgba(0,0,0,0.04);
+                line-height: 1;
+                user-select: none;
+                pointer-events: none;
+            }
+            .step-card--accent .step-bg-num { color: rgba(255,255,255,0.07); }
+            .step-icon-wrap {
+                width: 48px; height: 48px;
+                background: #f1f3f5;
+                border-radius: 12px;
+                display: flex; align-items: center; justify-content: center;
+                font-size: 1.2rem;
+                color: #111;
+            }
+        </style>
+
+        <footer class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <h5 class="fw-bold d-flex align-items-center gap-2">
+                            <svg width="28" height="28" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="300" rx="68" ry="68" fill="#fff"/>
+                                <rect x="97"  y="108" width="22" height="84" rx="4" fill="#111"/>
+                                <rect x="142" y="108" width="22" height="84" rx="4" fill="#111"/>
+                                <rect x="187" y="108" width="22" height="84" rx="4" fill="#111"/>
+                            </svg>
+                            WASD GAMING HUB
+                        </h5>
+                        <p class="text-secondary">Desenvolvido por Robert</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" onclick="navigate('termos')" class="me-3">Termos</a>
+                        <a href="#" onclick="navigate('privacidade')" class="me-3">Privacidade</a>
+                        <a href="#" onclick="navigate('download')">Download</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== DOWNLOAD ===== -->
+    <div class="page" id="page-download">
+
+        <section class="section-padding text-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <i class="fa-solid fa-download fa-3x mb-4"></i>
+                        <h1 class="fw-bold mb-3">Baixar WASD Gaming Hub</h1>
+                        <p class="text-secondary mb-4">Versão mais recente para Android. Instalação direta via APK.</p>
+                        <a href="#" class="btn btn-dark btn-lg mb-3">
+                            <i class="fa-brands fa-android me-2"></i>Baixar APK
+                        </a>
+                        <p class="small text-secondary">Android 8.0 ou superior • Tamanho: ~15MB</p>
+
+                        <div class="alert alert-light border mt-5 text-start">
+                            <h6 class="fw-bold">Como instalar:</h6>
+                            <ol class="mb-0 small text-secondary">
+                                <li>Baixe o arquivo APK</li>
+                                <li>Ative "Instalar apps desconhecidos" nas configurações</li>
+                                <li>Abra o arquivo e confirme a instalação</li>
+                                <li>Conceda as permissões solicitadas pelo app</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <h5 class="fw-bold">WASD GAMING HUB</h5>
+                        <p class="text-secondary">Desenvolvido por Robert</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" onclick="navigate('home')" class="me-3">Início</a>
+                        <a href="#" onclick="navigate('termos')" class="me-3">Termos</a>
+                        <a href="#" onclick="navigate('privacidade')">Privacidade</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== TERMOS ===== -->
+    <div class="page" id="page-termos">
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h1 class="fw-bold mb-4">Termos de Uso</h1>
+                        <p class="text-secondary">Última atualização: 1 de maio de 2026</p>
+
+                        <h5 class="fw-bold mt-5">1. Aceitação</h5>
+                        <p>Ao usar o WASD Gaming Hub, você concorda com estes termos. O aplicativo respeita sua privacidade e foi desenvolvido para otimizar a performance do seu dispositivo.</p>
+
+                        <h5 class="fw-bold mt-4">2. Licença de Uso</h5>
+                        <p>Concedemos uma licença pessoal, não comercial, para uso do aplicativo em dispositivos Android compatíveis.</p>
+
+                        <h5 class="fw-bold mt-4">3. Responsabilidades</h5>
+                        <p>O usuário é responsável pelo uso do aplicativo. Recursos como Scan Wi-Fi devem ser utilizados apenas em redes próprias ou com autorização.</p>
+
+                        <h5 class="fw-bold mt-4">4. Limitação de Garantia</h5>
+                        <p>O WASD Gaming Hub é fornecido "como está". Não garantimos compatibilidade com todos os dispositivos ou jogos, pois a performance depende do hardware.</p>
+
+                        <h5 class="fw-bold mt-4">5. Atualizações</h5>
+                        <p>Estes termos podem ser atualizados periodicamente. Recomendamos revisar esta página para se manter informado sobre eventuais alterações.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <h5 class="fw-bold">WASD GAMING HUB</h5>
+                        <p class="text-secondary">Desenvolvido por Robert</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" onclick="navigate('home')" class="me-3">Início</a>
+                        <a href="#" onclick="navigate('privacidade')" class="me-3">Privacidade</a>
+                        <a href="#" onclick="navigate('download')">Download</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== PRIVACIDADE ===== -->
+    <div class="page" id="page-privacidade">
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h1 class="fw-bold mb-4">Política de Privacidade</h1>
+                        <p class="text-secondary">Última atualização: 1 de maio de 2026</p>
+
+                        <h5 class="fw-bold mt-5">1. Coleta de Dados</h5>
+                        <p>O WASD Gaming Hub foi desenvolvido com foco em privacidade. Não coletamos, armazenamos ou compartilhamos dados pessoais identificáveis dos usuários.</p>
+
+                        <h5 class="fw-bold mt-4">2. Permissões</h5>
+                        <p>O aplicativo solicita permissões do sistema Android necessárias para seu funcionamento, como sobreposição de tela e acesso à rede. Essas permissões são usadas exclusivamente para executar as funções do app no dispositivo.</p>
+
+                        <h5 class="fw-bold mt-4">3. Dados de Diagnóstico</h5>
+                        <p>Informações técnicas como modelo do dispositivo e versão do sistema podem ser processadas localmente para garantir compatibilidade. Esses dados não são transmitidos para servidores externos.</p>
+
+                        <h5 class="fw-bold mt-4">4. Serviços de Terceiros</h5>
+                        <p>O WASD Gaming Hub não utiliza SDKs de análise, publicidade ou rastreamento de terceiros.</p>
+
+                        <h5 class="fw-bold mt-4">5. Segurança</h5>
+                        <p>Todas as operações do aplicativo ocorrem localmente no seu dispositivo, garantindo que suas informações permaneçam sob seu controle.</p>
+
+                        <h5 class="fw-bold mt-4">6. Alterações nesta Política</h5>
+                        <p>Podemos atualizar esta Política de Privacidade periodicamente. Recomendamos revisar esta página para se manter informado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <h5 class="fw-bold">WASD GAMING HUB</h5>
+                        <p class="text-secondary">Desenvolvido por Robert</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" onclick="navigate('home')" class="me-3">Início</a>
+                        <a href="#" onclick="navigate('termos')" class="me-3">Termos</a>
+                        <a href="#" onclick="navigate('download')">Download</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== 404 ===== -->
+    <div class="page" id="page-404">
+
+        <section class="section-padding text-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h1 class="display-1 fw-bold">404</h1>
+                        <h2 class="fw-bold mb-3">Página não encontrada</h2>
+                        <p class="text-secondary mb-4">A página que você está procurando não existe ou foi movida.</p>
+                        <a href="#" onclick="navigate('home')" class="btn btn-dark">
+                            <i class="fa-solid fa-house me-2"></i>Voltar ao Início
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <h5 class="fw-bold">WASD GAMING HUB</h5>
+                        <p class="text-secondary">Desenvolvido por Robert</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" onclick="navigate('home')" class="me-3">Início</a>
+                        <a href="#" onclick="navigate('termos')" class="me-3">Termos</a>
+                        <a href="#" onclick="navigate('privacidade')">Privacidade</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== RECURSOS ===== -->
+    <div class="page" id="page-recursos">
+
+        <section class="section-padding">
+            <div class="container">
+
+                <div class="text-center mb-5 reveal">
+                    <h1 class="fw-bold mb-3">Recursos do WASD Gaming Hub</h1>
+                    <p class="text-secondary lead">Tudo que você precisa para dominar no mobile, em um só app.</p>
+                </div>
+
+                <!-- Borda Mágica -->
+                <div class="row align-items-center g-5 mb-5 reveal">
+                    <div class="col-md-2 text-center">
+                        <div class="feature-icon mx-auto" style="width:64px;height:64px;font-size:1.5rem;"><i class="fa-solid fa-mobile-screen"></i></div>
+                    </div>
+                    <div class="col-md-10">
+                        <h3 class="fw-bold">Borda Mágica</h3>
+                        <p class="text-secondary">Personalize as bordas da sua tela e da barra de status com estilos e cores exclusivos. A Borda Mágica funciona como uma sobreposição leve sobre qualquer app ou jogo, sem interferir na performance. Ideal para deixar seu setup com uma identidade visual única e reconhecível em streams e clipes.</p>
+                        <ul class="text-secondary">
+                            <li>Estilos variados: neon, sólido, gradiente e mais</li>
+                            <li>Compatível com qualquer jogo ou app</li>
+                            <li>Consome praticamente zero recursos do sistema</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="my-4">
+
+                <!-- Ponteiro Gamer -->
+                <div class="row align-items-center g-5 mb-5 reveal">
+                    <div class="col-md-2 text-center">
+                        <div class="feature-icon mx-auto" style="width:64px;height:64px;font-size:1.5rem;"><i class="fa-solid fa-crosshairs"></i></div>
+                    </div>
+                    <div class="col-md-10">
+                        <h3 class="fw-bold">Ponteiro Gamer</h3>
+                        <p class="text-secondary">Sobreponha uma mira customizável diretamente na tela durante partidas de FPS. Diferente de miras internas dos jogos, o Ponteiro Gamer funciona como overlay do sistema, o que significa que ele aparece em cima de qualquer jogo sem modificar nenhum arquivo — sem risco de ban por modificação de client.</p>
+                        <ul class="text-secondary">
+                            <li>Vários modelos de mira: ponto, cruz, círculo, estilo military e mais</li>
+                            <li>Ajuste de tamanho, cor e opacidade</li>
+                            <li>Funciona em Free Fire, PUBG Mobile, Call of Duty Mobile e outros FPS</li>
+                            <li>Overlay leve, não afeta o FPS do jogo</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="my-4">
+
+                <!-- Scan Wi-Fi -->
+                <div class="row align-items-center g-5 mb-5 reveal">
+                    <div class="col-md-2 text-center">
+                        <div class="feature-icon mx-auto" style="width:64px;height:64px;font-size:1.5rem;"><i class="fa-solid fa-wifi"></i></div>
+                    </div>
+                    <div class="col-md-10">
+                        <h3 class="fw-bold">Scan Wi-Fi</h3>
+                        <p class="text-secondary">Analise sua rede local em tempo real e identifique o que está travando sua conexão antes de entrar em uma partida. O Scan Wi-Fi mostra a qualidade do sinal, latência, interferências de canal e número de dispositivos conectados — tudo em uma interface simples.</p>
+                        <ul class="text-secondary">
+                            <li>Diagnóstico completo da rede em segundos</li>
+                            <li>Detecção de interferência de canal Wi-Fi</li>
+                            <li>Teste de latência (ping) para servidores de jogos</li>
+                            <li>Lista de dispositivos conectados na rede</li>
+                            <li>Recomendações automáticas para melhorar a conexão</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="my-4">
+
+                <!-- DNS Proxy -->
+                <div class="row align-items-center g-5 mb-5 reveal">
+                    <div class="col-md-2 text-center">
+                        <div class="feature-icon mx-auto" style="width:64px;height:64px;font-size:1.5rem;"><i class="fa-solid fa-bolt"></i></div>
+                    </div>
+                    <div class="col-md-10">
+                        <h3 class="fw-bold">DNS Proxy</h3>
+                        <p class="text-secondary">Substitua o DNS padrão da sua operadora por servidores otimizados para gaming com um toque. DNS ruins são uma das causas mais subestimadas de ping alto — o WASD resolve isso automaticamente, escolhendo o servidor mais rápido disponível para sua localização.</p>
+                        <ul class="text-secondary">
+                            <li>Troca de DNS com um toque, sem configuração manual</li>
+                            <li>Suporte a DNS públicos populares: Cloudflare, Google, OpenDNS</li>
+                            <li>Modo automático: detecta e aplica o DNS mais rápido para você</li>
+                            <li>Redução de latência perceptível em redes móveis e Wi-Fi</li>
+                            <li>Sem necessidade de root</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="my-4">
+
+                <!-- Compatibilidade -->
+                <div class="row g-4 mt-2">
+                    <div class="col-12 reveal">
+                        <h3 class="fw-bold mb-4">Compatibilidade e Requisitos</h3>
+                    </div>
+                    <div class="col-md-4 reveal">
+                        <div class="p-4 bg-light-gray rounded">
+                            <div class="feature-icon mb-3"><i class="fa-brands fa-android"></i></div>
+                            <h6 class="fw-bold">Sistema</h6>
+                            <p class="text-secondary mb-0">Android 8.0 (Oreo) ou superior</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal" style="transition-delay:0.1s">
+                        <div class="p-4 bg-light-gray rounded">
+                            <div class="feature-icon mb-3"><i class="fa-solid fa-microchip"></i></div>
+                            <h6 class="fw-bold">RAM Mínima</h6>
+                            <p class="text-secondary mb-0">2 GB (recomendado 3 GB+)</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 reveal" style="transition-delay:0.2s">
+                        <div class="p-4 bg-light-gray rounded">
+                            <div class="feature-icon mb-3"><i class="fa-solid fa-hard-drive"></i></div>
+                            <h6 class="fw-bold">Armazenamento</h6>
+                            <p class="text-secondary mb-0">~15 MB de espaço livre</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ -->
+                <div class="mt-5 reveal">
+                    <h3 class="fw-bold mb-4">Perguntas Frequentes</h3>
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item border mb-2">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    O app precisa de root?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-secondary">Não. O WASD Gaming Hub funciona 100% sem root, usando apenas as permissões padrão do Android como sobreposição de tela e acesso à rede.</div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border mb-2">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    O Ponteiro Gamer pode causar ban?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-secondary">O Ponteiro Gamer é um overlay do sistema operacional, semelhante a notificações ou bolhas de chat. Ele não modifica nenhum arquivo do jogo, por isso não é detectado pelos sistemas anti-cheat convencionais.</div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border mb-2">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    O DNS Proxy funciona com dados móveis?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-secondary">Sim. O DNS Proxy funciona tanto em Wi-Fi quanto em redes móveis (4G/5G), aplicando o DNS otimizado diretamente na VPN local do dispositivo.</div>
+                            </div>
+                        </div>
+                        <div class="accordion-item border">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    O app é gratuito?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-secondary">Sim, completamente gratuito. Sem anúncios, sem assinatura, sem paywalls. Todos os recursos estão disponíveis na versão base do APK.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5 reveal">
+                    <a href="#" onclick="navigate('download')" class="btn btn-dark btn-lg me-2">Baixar APK</a>
+                    <a href="#" onclick="navigate('home')" class="btn btn-outline-dark btn-lg">Voltar ao Início</a>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <h5 class="fw-bold">WASD GAMING HUB</h5>
+                        <p class="text-secondary">Desenvolvido por Robert</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="#" onclick="navigate('home')" class="me-3">Início</a>
+                        <a href="#" onclick="navigate('termos')" class="me-3">Termos</a>
+                        <a href="#" onclick="navigate('privacidade')" class="me-3">Privacidade</a>
+                        <a href="#" onclick="navigate('download')">Download</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function navigate(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            var target = document.getElementById('page-' + page);
+            if (target) {
+                target.classList.add('active');
+            } else {
+                document.getElementById('page-404').classList.add('active');
+            }
+            window.scrollTo(0, 0);
+            // re-run observer after page switch
+            setTimeout(observeReveal, 50);
+            return false;
+        }
+
+        function observeReveal() {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.reveal:not(.visible), hr:not(.visible)').forEach(function(el) {
+                observer.observe(el);
+            });
+        }
+
+        // Navbar shadow on scroll
+        window.addEventListener('scroll', function() {
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        observeReveal();
+    </script>
+</body>
+</html>
